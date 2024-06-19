@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CreateBasicDto } from './create-basic.dto';
 
 
 @Controller()
@@ -14,5 +15,10 @@ export class AppController {
   @Get()
   async findById(@Param('id') id: string) {
     return await this.appService.findById(id);
+  }
+
+  @Post()
+  async create(@Body() createBasicDto: CreateBasicDto) {
+    return await this.appService.create(createBasicDto);
   }
 }

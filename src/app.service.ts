@@ -20,4 +20,8 @@ export class AppService {
     const createdBasic = new this.basicModel(createBasicDto);
     return createdBasic.save();
   }
+
+  async delete(id: string) {
+    return this.basicModel.findByIdAndDelete(id);
+  }
 }

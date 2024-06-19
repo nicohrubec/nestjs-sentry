@@ -7,7 +7,7 @@ export type BasicDocument = HydratedDocument<Basic>;
 @Schema()
 export class Basic {
   @Prop({ default: generateUuidV4})
-  id: string;
+  _id: string;
 
   @Prop({ required: true })
   description: string;

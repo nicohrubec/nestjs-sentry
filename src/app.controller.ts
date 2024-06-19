@@ -12,8 +12,9 @@ export class AppController {
     return await this.appService.findAll();
   }
 
-  @Get()
+  @Get(":id")
   async findById(@Param('id') id: string) {
+    console.log(id);
     return await this.appService.findById(id);
   }
 

@@ -12,14 +12,19 @@ export class AppController {
     return await this.appService.findAll();
   }
 
-  @Get(":id")
-  async findById(@Param('id') id: string) {
-    return await this.appService.findById(id);
-  }
-
   @Post()
   async create(@Body() createBasicDto: CreateBasicDto) {
     return await this.appService.create(createBasicDto);
+  }
+
+  @Get("/error")
+  async throw_error() {
+    throw new Error("Random error that should be tracked.");
+  }
+
+  @Get(":id")
+  async findById(@Param('id') id: string) {
+    return await this.appService.findById(id);
   }
 
   @Delete(":id")

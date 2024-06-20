@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Basic } from './basic.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -13,15 +13,25 @@ export class AppService {
   }
 
   async findById(id: string): Promise<Basic> {
-    return this.basicModel.findById(id);
+    let basic = await this.basicModel.findById(id);
+
+    if (basic == null) {
+      throw new HttpException(
+        `invalid id: ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return basic;
   }
 
   async create(createBasicDto: CreateBasicDto): Promise<Basic> {
     const createdBasic = new this.basicModel(createBasicDto);
-    return createdBasic.save();
+    return await createdBasic.save();
   }
 
   async delete(id: string) {
-    return this.basicModel.findByIdAndDelete(id);
+    await this.findById(id);
+    await this.basicModel.findByIdAndDelete(id);
   }
 }

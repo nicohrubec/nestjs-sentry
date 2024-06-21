@@ -8,11 +8,11 @@ import { CreateBasicDto } from './create-basic.dto';
 export class AppService {
   constructor(@InjectModel(Basic.name) private basicModel: Model<Basic>) {}
 
-  async findAll(): Promise<Basic[]> {
-    return this.basicModel.find().exec();
+  async findAll() {
+    return this.basicModel.find();
   }
 
-  async findById(id: string): Promise<Basic> {
+  async findById(id: string) {
     let basic = await this.basicModel.findById(id);
 
     if (basic == null) {

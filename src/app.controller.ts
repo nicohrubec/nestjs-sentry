@@ -46,6 +46,24 @@ export class AppController {
     );
   }
 
+  @Get("/sentrySpan")
+  async get_span() {
+    console.log("GET /sentrySpan")
+    Sentry.startSpan(
+      {
+        op: "test_span",
+        name: "My First Test Transaction Span",
+      },
+      () => {
+        setTimeout(() => {
+          console.log("Hello Sentry!");
+        }, 99);
+      },
+    );
+  }
+
+
+
   @Get(":id")
   async findById(@Param('id') id: string) {
     console.log("GET /" + id);

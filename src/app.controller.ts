@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateBasicDto } from './create-basic.dto';
-import * as Sentry from '@sentry/node'
+// import * as Sentry from '@sentry/node'
+import * as Sentry from '@sentry/nestjs';
 
 
 @Controller()
@@ -24,6 +25,12 @@ export class AppController {
   async throw_error() {
     console.log("GET /error");
     throw new Error("Random error that should be tracked.");
+  }
+
+  @Get("/expectedError")
+  async throw_not_found() {
+    console.log("GET /expectedError")
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   @Get("/sentryError")

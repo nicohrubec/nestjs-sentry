@@ -1,9 +1,10 @@
-import * as Sentry from "@sentry/node";
+// import * as Sentry from '@sentry/node';
+import * as Sentry from '@sentry/nestjs';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 
 // Ensure to call this before importing any other modules!
 Sentry.init({
-  dsn: "https://b51248a73ae87f0174c304cb224bca49@o4507458248835072.ingest.de.sentry.io/4507458252832848",
+  dsn: 'https://b51248a73ae87f0174c304cb224bca49@o4507458248835072.ingest.de.sentry.io/4507458252832848',
   integrations: [
     // Add our Profiling integration
     nodeProfilingIntegration(),
@@ -16,5 +17,5 @@ Sentry.init({
   // Set sampling rate for profiling
   // This is relative to tracesSampleRate
   profilesSampleRate: 1.0,
-  debug:  true
+  debug: true,
 });

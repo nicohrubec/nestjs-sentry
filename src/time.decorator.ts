@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-export function GetSpan(): MethodDecorator {
+export function GetTime(): MethodDecorator {
   return function (
     target: any,
     propertyKey: string,

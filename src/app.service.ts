@@ -3,7 +3,7 @@ import { Basic } from './basic.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBasicDto } from './create-basic.dto';
-import { GetSpan } from './span.decorator';
+import { GetTime } from './time.decorator';
 
 @Injectable()
 export class AppService {
@@ -13,7 +13,7 @@ export class AppService {
     return this.basicModel.find();
   }
 
-  @GetSpan()
+  @GetTime()
   async findById(id: string) {
     const basic = await this.basicModel.findById(id);
 

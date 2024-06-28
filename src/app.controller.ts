@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Param, Post, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Delete,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateBasicDto } from './create-basic.dto';
 // import * as Sentry from '@sentry/node'
 import * as Sentry from '@sentry/nestjs';
-
 
 @Controller()
 export class AppController {
@@ -11,40 +19,40 @@ export class AppController {
 
   @Get()
   async findAll() {
-    console.log("GET /")
+    console.log('GET /');
     return await this.appService.findAll();
   }
 
   @Post()
   async create(@Body() createBasicDto: CreateBasicDto) {
-    console.log("POST /")
+    console.log('POST /');
     return await this.appService.create(createBasicDto);
   }
 
-  @Get("/error")
+  @Get('/error')
   async throw_error() {
-    console.log("GET /error");
-    throw new Error("Random error that should be tracked.");
+    console.log('GET /error');
+    throw new Error('Random error that should be tracked.');
   }
 
-  @Get("/expectedError")
+  @Get('/expectedError')
   async throw_not_found() {
-    console.log("GET /expectedError")
+    console.log('GET /expectedError');
     throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
-  @Get("/sentryError")
+  @Get('/sentryError')
   async throw_sentry_error() {
-    console.log("GET /sentryError")
+    console.log('GET /sentryError');
     Sentry.startSpan(
       {
-        op: "test",
-        name: "My First Test Transaction",
+        op: 'test',
+        name: 'My First Test Transaction',
       },
       () => {
         setTimeout(() => {
           try {
-            throw new Error("Error!");
+            throw new Error('Error!');
           } catch (e) {
             Sentry.captureException(e);
           }
@@ -53,33 +61,31 @@ export class AppController {
     );
   }
 
-  @Get("/sentrySpan")
+  @Get('/sentrySpan')
   async get_span() {
-    console.log("GET /sentrySpan")
+    console.log('GET /sentrySpan');
     Sentry.startSpan(
       {
-        op: "test_span",
-        name: "My First Test Transaction Span",
+        op: 'test_span',
+        name: 'My First Test Transaction Span',
       },
       () => {
         setTimeout(() => {
-          console.log("Hello Sentry!");
+          console.log('Hello Sentry!');
         }, 99);
       },
     );
   }
 
-
-
-  @Get(":id")
+  @Get(':id')
   async findById(@Param('id') id: string) {
-    console.log("GET /" + id);
+    console.log('GET /' + id);
     return await this.appService.findById(id);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   async delete(@Param('id') id: string) {
-    console.log("DELETE /" + id);
+    console.log('DELETE /' + id);
     return await this.appService.delete(id);
   }
 }

@@ -13,13 +13,10 @@ export class AppService {
   }
 
   async findById(id: string) {
-    let basic = await this.basicModel.findById(id);
+    const basic = await this.basicModel.findById(id);
 
     if (basic == null) {
-      throw new HttpException(
-        `invalid id: ${id}`,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(`invalid id: ${id}`, HttpStatus.NOT_FOUND);
     }
 
     return basic;

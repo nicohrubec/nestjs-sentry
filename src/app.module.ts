@@ -11,7 +11,7 @@ import { UuidModule } from 'nestjs-uuid';
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.CONNECTION_STRING),
     MongooseModule.forFeature([{ name: Basic.name, schema: BasicSchema }]),
-    UuidModule
+    UuidModule,
   ],
   controllers: [AppController],
   providers: [AppService],

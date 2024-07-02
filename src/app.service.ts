@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBasicDto } from './create-basic.dto';
 import { GetTime } from './time.decorator';
+import { GetSpanAsync } from './span.decorator';
 
 @Injectable()
 export class AppService {
@@ -13,6 +14,20 @@ export class AppService {
     return this.basicModel.find();
   }
 
+  @GetSpanAsync()
+  async randomWait(milliseconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  }
+
+  @GetSpanAsync()
+  delaySync(milliseconds: number) {
+    const start = new Date().getTime();
+    let end = start;
+    while (end < start + milliseconds) {
+      end = new Date().getTime();
+    }
+  }
+
   @GetTime()
   async findById(id: string) {
     const basic = await this.basicModel.findById(id);
@@ -20,6 +35,9 @@ export class AppService {
     if (basic == null) {
       throw new HttpException(`invalid id: ${id}`, HttpStatus.NOT_FOUND);
     }
+
+    await this.randomWait(2000);
+    this.delaySync(1000);
 
     return basic;
   }

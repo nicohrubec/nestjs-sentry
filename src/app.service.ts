@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBasicDto } from './create-basic.dto';
 import { GetTime } from './time.decorator';
-import { GetSpanAsync } from './span.decorator';
+import { SentryTraced } from '@sentry/nestjs';
 
 @Injectable()
 export class AppService {
@@ -14,12 +14,12 @@ export class AppService {
     return this.basicModel.find();
   }
 
-  @GetSpanAsync()
+  @SentryTraced()
   async randomWait(milliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 
-  @GetSpanAsync()
+  @SentryTraced()
   delaySync(milliseconds: number) {
     const start = new Date().getTime();
     let end = start;

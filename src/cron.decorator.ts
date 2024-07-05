@@ -10,21 +10,10 @@ export const SentryCron = (
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
-      const checkInId = Sentry.captureCheckIn(
-        {
-          monitorSlug,
-          status: 'in_progress',
-        },
-        {
-          schedule: {
-            type: 'crontab',
-            value: cronTime,
-          },
-          checkinMargin: 1,
-          maxRuntime: 1,
-          timezone: 'America/Los_Angeles',
-        },
-      );
+      const checkInId = Sentry.captureCheckIn({
+        monitorSlug,
+        status: 'in_progress',
+      });
 
       try {
         await originalMethod.apply(this, args);

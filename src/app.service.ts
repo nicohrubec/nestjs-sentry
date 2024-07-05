@@ -56,7 +56,7 @@ export class AppService {
     await this.basicModel.findByIdAndDelete(id);
   }
 
-  @SentryCron('*/10 * * * * *', 'test-cron-slug')
+  @SentryCron('* * * * *', 'test-cron-slug')
   handleCron() {
     this.logger.debug('Called when the current second is 45');
   }

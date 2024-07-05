@@ -1,6 +1,5 @@
 import { Cron, CronExpression } from '@nestjs/schedule';
 import * as Sentry from '@sentry/nestjs';
-import { Logger } from '@nestjs/common';
 
 export const SentryCron = (
   cronTime: string | CronExpression,
@@ -19,7 +18,6 @@ export const SentryCron = (
         await originalMethod.apply(this, args);
 
         // cron job successful
-        Logger.log('Cron job was successful, sending to Sentry!');
         Sentry.captureCheckIn({
           checkInId,
           monitorSlug,

@@ -5,7 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateBasicDto } from './create-basic.dto';
 import { GetTime } from './time.decorator';
 import { SentryTraced } from '@sentry/nestjs';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { SentryCron } from './cron.decorator';
 
 @Injectable()
 export class AppService {
@@ -55,7 +56,7 @@ export class AppService {
     await this.basicModel.findByIdAndDelete(id);
   }
 
-  @Cron('45 * * * * *')
+  @SentryCron(CronExpression.EVERY_SECOND, 'test-cron-slug')
   handleCron() {
     this.logger.debug('Called when the current second is 45');
   }

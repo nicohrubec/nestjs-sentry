@@ -17,7 +17,7 @@ export const SentryCron = (
       try {
         await originalMethod.apply(this, args);
 
-        // successful cron job
+        // cron job successful
         Sentry.captureCheckIn({
           checkInId,
           monitorSlug,

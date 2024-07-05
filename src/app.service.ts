@@ -4,9 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateBasicDto } from './create-basic.dto';
 import { GetTime } from './time.decorator';
-import { SentryTraced } from '@sentry/nestjs';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { SentryCron } from './cron.decorator';
+import { SentryTraced, SentryCron } from '@sentry/nestjs';
 
 @Injectable()
 export class AppService {

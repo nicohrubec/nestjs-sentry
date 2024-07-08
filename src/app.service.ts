@@ -5,6 +5,19 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateBasicDto } from './create-basic.dto';
 import { GetTime } from './time.decorator';
 import { SentryTraced, SentryCron } from '@sentry/nestjs';
+import { Cron } from '@nestjs/schedule';
+import * as Sentry from '@sentry/nestjs';
+import { MonitorConfig } from '@sentry/types';
+
+const monitorConfig: MonitorConfig = {
+  schedule: {
+    type: 'crontab',
+    value: '* * * * *',
+  },
+  checkinMargin: 2, // In minutes. Optional.
+  maxRuntime: 10, // In minutes. Optional.
+  timezone: 'America/Los_Angeles', // Optional.
+};
 
 @Injectable()
 export class AppService {
@@ -54,8 +67,9 @@ export class AppService {
     await this.basicModel.findByIdAndDelete(id);
   }
 
-  @SentryCron('* * * * *', 'test-cron-slug')
+  @Cron('* * * * *')
+  @SentryCron('test-cron-slug', monitorConfig)
   handleCron() {
-    this.logger.debug('Called when the current second is 45');
+    this.logger.debug('Cron job!');
   }
 }

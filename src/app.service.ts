@@ -6,7 +6,6 @@ import { CreateBasicDto } from './create-basic.dto';
 import { GetTime } from './time.decorator';
 import { SentryTraced, SentryCron } from '@sentry/nestjs';
 import { Cron } from '@nestjs/schedule';
-import * as Sentry from '@sentry/nestjs';
 import { MonitorConfig } from '@sentry/types';
 
 const monitorConfig: MonitorConfig = {

@@ -7,9 +7,11 @@ import { ConfigModule } from '@nestjs/config';
 import { UuidModule } from 'nestjs-uuid';
 import { ScheduleModule } from '@nestjs/schedule';
 import { logger, LoggerMiddleware } from './logger.middleware';
+import { SentryModule } from '@sentry/nestjs/setup';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.CONNECTION_STRING),
     MongooseModule.forFeature([{ name: Basic.name, schema: BasicSchema }]),
@@ -21,9 +23,11 @@ import { logger, LoggerMiddleware } from './logger.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer
+    console.log('Add class middleware: ');
+    console.trace(consumer
       .apply(LoggerMiddleware)
-      .forRoutes(AppController);
-    consumer.apply(logger).forRoutes(AppController);
+      .forRoutes(AppController));
+    console.log('Add functional middleware: ');
+    console.trace(consumer.apply(logger).forRoutes(AppController));
   }
 }

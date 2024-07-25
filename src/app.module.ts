@@ -6,7 +6,7 @@ import { Basic, BasicSchema } from './basic.schema';
 import { ConfigModule } from '@nestjs/config';
 import { UuidModule } from 'nestjs-uuid';
 import { ScheduleModule } from '@nestjs/schedule';
-import { LoggerMiddleware } from './logger.middleware';
+import { logger, LoggerMiddleware } from './logger.middleware';
 
 @Module({
   imports: [
@@ -23,6 +23,7 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(LoggerMiddleware)
-      .forRoutes({ path: '/error', method: RequestMethod.ALL });
+      .forRoutes(AppController);
+    consumer.apply(logger).forRoutes(AppController);
   }
 }

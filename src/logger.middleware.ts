@@ -8,10 +8,15 @@ function delay(ms) {
   }
 }
 
+export function logger(req: Request, res: Response, next: NextFunction) {
+  console.log(`Function middleware...`);
+  next();
+}
+
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log('Request...');
+    console.log('Class middleware...');
     delay(1000);
     next();
   }

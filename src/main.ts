@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   console.log('Add global middleware: ');
-  console.trace(app.use(globalLogger));
+  app.use(globalLogger);
 
   await app.listen(3000);
 }

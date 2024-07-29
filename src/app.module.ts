@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -24,10 +24,10 @@ import { SentryModule } from '@sentry/nestjs/setup';
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
     console.log('Add class middleware: ');
-    console.trace(consumer
+    consumer
       .apply(LoggerMiddleware)
-      .forRoutes(AppController));
+      .forRoutes(AppController);
     console.log('Add functional middleware: ');
-    console.trace(consumer.apply(logger).forRoutes(AppController));
+    consumer.apply(logger).forRoutes(AppController);
   }
 }

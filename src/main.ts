@@ -2,14 +2,11 @@ import './instrument';
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { globalLogger } from './global.middleware';
+import { FetchGuard } from './fetch.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  console.log('Add global middleware: ');
-  // app.use(globalLogger);
-
+  app.useGlobalGuards(new FetchGuard());
   await app.listen(3000);
 }
 bootstrap();

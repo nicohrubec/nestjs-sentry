@@ -28,6 +28,6 @@ export class AppModule {
       .apply(LoggerMiddleware)
       .forRoutes(AppController);
     console.log('Add functional middleware: ');
-    consumer.apply(logger).forRoutes(AppController);
+    // consumer.apply(logger).forRoutes(AppController);
   }
 }

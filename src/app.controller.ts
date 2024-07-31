@@ -7,11 +7,13 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateBasicDto } from './create-basic.dto';
 // import * as Sentry from '@sentry/node'
 import * as Sentry from '@sentry/nestjs';
+import { FetchGuard } from './fetch.guard';
 
 @Controller()
 export class AppController {
@@ -24,6 +26,7 @@ export class AppController {
   }
 
   @Post()
+  @UseGuards(FetchGuard)
   async create(@Body() createBasicDto: CreateBasicDto) {
     console.log('POST /');
     return await this.appService.create(createBasicDto);

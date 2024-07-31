@@ -6,7 +6,7 @@ import {
   Post,
   Delete,
   HttpException,
-  HttpStatus,
+  HttpStatus, ParseIntPipe,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateBasicDto } from './create-basic.dto';
@@ -21,6 +21,11 @@ export class AppController {
   async findAll() {
     console.log('GET /');
     return await this.appService.findAll();
+  }
+
+  @Get('test-pipe-instrumentation/:id')
+  testPipeInstrumentation(@Param('id', ParseIntPipe) id: number) {
+    return { value: id };
   }
 
   @Post()

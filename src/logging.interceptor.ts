@@ -15,6 +15,7 @@ export class LoggingInterceptor implements NestInterceptor {
 
     const now = Date.now();
     delay(500);
+
     return next.handle().pipe(
       tap(() => console.log(`After... ${Date.now() - now}ms`)),
       tap(() => delay(500)),

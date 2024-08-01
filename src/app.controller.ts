@@ -6,14 +6,16 @@ import {
   Post,
   Delete,
   HttpException,
-  HttpStatus, ParseIntPipe,
+  HttpStatus, ParseIntPipe, UseInterceptors,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateBasicDto } from './create-basic.dto';
 // import * as Sentry from '@sentry/node'
 import * as Sentry from '@sentry/nestjs';
+import { LoggingInterceptor } from './logging.interceptor';
 
 @Controller()
+@UseInterceptors(LoggingInterceptor)
 export class AppController {
   constructor(private readonly appService: AppService) {}
 

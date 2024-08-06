@@ -21,6 +21,7 @@
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org test-org-su --project nestjs-sentry ./dist && sentry-cli sourcemaps upload --org test-org-su --project nestjs-sentry ./dist"
   },
   "dependencies": {
+    "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.0.0",
@@ -31,6 +32,7 @@
     "@sentry/nestjs": "8.23.0",
     "@sentry/node": "8.23.0",
     "@sentry/profiling-node": "8.23.0",
+    "cache-manager": "^5.7.5",
     "mongoose": "6.13.0",
     "nestjs-uuid": "^0.1.4",
     "reflect-metadata": "^0.2.0",

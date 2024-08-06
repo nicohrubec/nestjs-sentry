@@ -8,6 +8,7 @@ import { UuidModule } from 'nestjs-uuid';
 import { ScheduleModule } from '@nestjs/schedule';
 import { logger, LoggerMiddleware } from './logger.middleware';
 import { SentryModule } from '@sentry/nestjs/setup';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SentryModule } from '@sentry/nestjs/setup';
     MongooseModule.forFeature([{ name: Basic.name, schema: BasicSchema }]),
     UuidModule,
     ScheduleModule.forRoot(),
+    CacheModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],

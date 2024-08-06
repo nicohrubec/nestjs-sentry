@@ -6,16 +6,22 @@ import {
   Post,
   Delete,
   HttpException,
-  HttpStatus, ParseIntPipe, UseInterceptors,
+  HttpStatus,
+  ParseIntPipe,
+  UseInterceptors,
+  UseFilters,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateBasicDto } from './create-basic.dto';
 // import * as Sentry from '@sentry/node'
 import * as Sentry from '@sentry/nestjs';
 import { LoggingInterceptor } from './logging.interceptor';
+import { LocalExampleExceptionFilter } from './exception.filter';
+import { LocalExampleException } from './example.exception';
 
 @Controller()
 @UseInterceptors(LoggingInterceptor)
+@UseFilters(LocalExampleExceptionFilter)
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -23,6 +29,12 @@ export class AppController {
   async findAll() {
     console.log('GET /');
     return await this.appService.findAll();
+  }
+
+  @Get('httpError')
+  httpError() {
+    console.log('GET /httpError');
+    throw new LocalExampleException();
   }
 
   @Get('test-pipe-instrumentation/:id')

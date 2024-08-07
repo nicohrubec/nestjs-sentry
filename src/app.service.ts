@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { Basic } from './basic.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -7,6 +13,8 @@ import { GetTime } from './time.decorator';
 import { SentryTraced, SentryCron } from '@sentry/nestjs';
 import { Cron } from '@nestjs/schedule';
 import { MonitorConfig } from '@sentry/types';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 const monitorConfig: MonitorConfig = {
   schedule: {
@@ -22,9 +30,13 @@ const monitorConfig: MonitorConfig = {
 export class AppService {
   private readonly logger = new Logger(AppService.name);
 
-  constructor(@InjectModel(Basic.name) private basicModel: Model<Basic>) {}
+  constructor(
+    @InjectModel(Basic.name) private basicModel: Model<Basic>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   async findAll() {
+    await this.cacheManager.set('key', 'value');
     return this.basicModel.find();
   }
 

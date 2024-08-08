@@ -18,9 +18,10 @@ import * as Sentry from '@sentry/nestjs';
 import { LoggingInterceptor } from './logging.interceptor';
 import { LocalExampleExceptionFilter } from './exception.filter';
 import { LocalExampleException } from './example.exception';
+import { TestInterceptor } from './test.interceptor';
 
 @Controller()
-@UseInterceptors(LoggingInterceptor)
+@UseInterceptors(LoggingInterceptor, TestInterceptor)
 @UseFilters(LocalExampleExceptionFilter)
 export class AppController {
   constructor(private readonly appService: AppService) {}

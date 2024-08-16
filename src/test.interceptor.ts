@@ -22,7 +22,7 @@ export class TestInterceptor implements NestInterceptor {
         const now_2 = Date.now();
         delay(250);
         console.log(`After... ${Date.now() - now_2}ms`);
-        Sentry.startSpan({ name: 'test-span-after' }, () => {});
+        Sentry.startSpan({ name: 'test-span-after-2' }, () => {});
       }),
     );
   }

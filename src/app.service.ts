@@ -32,11 +32,17 @@ export class AppService {
 
   constructor(
     @InjectModel(Basic.name) private basicModel: Model<Basic>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @Inject(CACHE_MANAGER) public cacheManager: Cache,
   ) {}
 
   async findAll() {
+    console.log('set cache value in app');
     await this.cacheManager.set('key', 'value');
+    const value = await this.cacheManager.get('key');
+    console.log('got value from cache: ');
+    console.log(value);
+    console.log('del value from cache');
+    await this.cacheManager.del('key');
     return this.basicModel.find();
   }
 
